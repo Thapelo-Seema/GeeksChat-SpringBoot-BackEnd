@@ -13,13 +13,14 @@ public class MessageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "sender_id")
     private UserEntity sender;
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "receiver_id")
     private UserEntity receiver;
     private String txtContent;
+    private String topic;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
