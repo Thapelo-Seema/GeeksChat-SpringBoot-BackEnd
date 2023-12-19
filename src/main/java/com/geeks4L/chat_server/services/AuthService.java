@@ -26,9 +26,7 @@ public class AuthService implements IAuthService {
     @Override
     public ResponseObject<LoginResponse> login(LoginRequest loginRequest){
         ResponseObject<LoginResponse> requestErrors = this.getRequestErrors(loginRequest);
-
         if(requestErrors != null) return requestErrors;
-
         LoginResponse loginResponse = this.modelMapper.map(
                 this.userRepository.findByEmail(loginRequest.getEmail()), LoginResponse.class);
         return new ResponseObject<>(Status.SUCCESS, "Login success", loginResponse);
@@ -39,6 +37,8 @@ public class AuthService implements IAuthService {
     private ResponseObject<LoginResponse> getRequestErrors(LoginRequest loginRequest){
         //does that username and password exist
         LoginEntity loginEntity = this.authRepository.findByUserEmail(loginRequest.getEmail());
+        System.out.println("login entity");
+        System.out.println(loginEntity);
         if(loginEntity == null || !loginEntity.getPassword().equals(loginRequest.getPassword()))
             return new ResponseObject<>(Status.NOT_FOUND,
                     "Incorrect credentials entered", null);

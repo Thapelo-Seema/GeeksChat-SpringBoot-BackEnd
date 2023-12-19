@@ -88,6 +88,7 @@ public class UserCrudService implements IUserCrudService {
 
     private CreateUserResponse createAndSaveUserEntity(CreateUserRequest userRequest){
         UserEntity userEntity = modelMapper.map(userRequest, UserEntity.class);
+        userEntity.setLastModified();
         this.userRepository.saveAndFlush(userEntity);
         return this.modelMapper.map(userEntity, CreateUserResponse.class);
     }
