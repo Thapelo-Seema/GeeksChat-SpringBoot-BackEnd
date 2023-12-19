@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -16,8 +17,9 @@ public class UserEntity {
     private String lastName;
     private String email;
     private String handle;
-    @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_modified")
-    private Date lastModified;
+    private LocalDateTime lastModified;
+
+    public void setLastModified(){
+        this.lastModified = LocalDateTime.now();
+    }
 }

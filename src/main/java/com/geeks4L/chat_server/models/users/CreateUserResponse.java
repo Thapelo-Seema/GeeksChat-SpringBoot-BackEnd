@@ -1,21 +1,22 @@
 package com.geeks4L.chat_server.models.users;
 
-import com.geeks4L.chat_server.abstractions.abstract_classes.AbstractCreateUserDto;
-import com.geeks4L.chat_server.models.enums.Status;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateUserResponse {
     protected Long id;
     protected String firstName;
     protected String lastName;
     protected String email;
     protected String handle;
-    protected Date lastModified;
+    protected LocalDateTime lastModified;
 
     public boolean hasNoNulls(){
         return id != null &&

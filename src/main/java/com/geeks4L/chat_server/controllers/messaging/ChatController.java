@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ChatController {
 
+    //Todo: need to factor out processing to a messaging service
     @Autowired
     private SimpMessagingTemplate msgTemplate;
     @Autowired

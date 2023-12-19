@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+//Todo: Need to implement encryption, exception handling and design patterns to logic
 @Service
 public class MessageService {
     @Autowired
