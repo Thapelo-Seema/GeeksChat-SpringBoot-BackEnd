@@ -21,5 +21,4 @@ public class LoginEntity {
     private UserEntity user;
     private String password;
     private LocalDateTime lastModified;
-
 }

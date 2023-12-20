@@ -1,6 +1,10 @@
 package com.geeks4L.chat_server.controllers.messaging;
 
+import com.geeks4L.chat_server.models.enums.Status;
+import com.geeks4L.chat_server.models.generics.ResponseObject;
 import com.geeks4L.chat_server.models.messaging.MessageEntity;
+import com.geeks4L.chat_server.models.messaging.MessageRequest;
+import com.geeks4L.chat_server.models.messaging.MessageResponse;
 import com.geeks4L.chat_server.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -17,11 +21,15 @@ public class ChatController {
     @Autowired
     private MessageService messageService;
     @MessageMapping("/private-message")
-    public MessageEntity receivePrivateMessage(@Payload MessageEntity messageEntity){
-        this.messageService.saveMessage(messageEntity);
+    public MessageResponse receivePrivateMessage(@Payload MessageRequest messageRequest){
+        ResponseObject<MessageResponse> messageResponseResponseObject = this.messageService.saveMessage(messageRequest);
+        if(!messageResponseResponseObject.getStatus().equals(Status.SUCCESS)){
+            System.out.println(messageResponseResponseObject.getMessage());
+            return null;
+        }
         //message will be sent to /user/users_id/private
-        msgTemplate.convertAndSendToUser(messageEntity.getReceiver().getId().toString(), "/private", messageEntity);
-        return messageEntity;
+       msgTemplate.convertAndSendToUser(messageRequest.getReceiver().toString(), "/private", messageResponseResponseObject.getData());
+        return messageResponseResponseObject.getData();
     }
 
 }

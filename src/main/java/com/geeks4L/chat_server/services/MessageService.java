@@ -1,9 +1,15 @@
 package com.geeks4L.chat_server.services;
 
+import com.geeks4L.chat_server.mappers.MessageMapper;
+import com.geeks4L.chat_server.models.enums.Status;
+import com.geeks4L.chat_server.models.generics.ResponseObject;
 import com.geeks4L.chat_server.models.messaging.MessageEntity;
+import com.geeks4L.chat_server.models.messaging.MessageRequest;
+import com.geeks4L.chat_server.models.messaging.MessageResponse;
 import com.geeks4L.chat_server.models.users.UserEntity;
 import com.geeks4L.chat_server.repositories.MessageRepository;
 import com.geeks4L.chat_server.repositories.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -17,14 +23,22 @@ public class MessageService {
     MessageRepository msgRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ModelMapper modelMapper;
+    @Autowired
+    MessageMapper messageMapper;
 
-    public boolean saveMessage(MessageEntity messageEntity){
-            try{
-                MessageEntity msg = this.msgRepository.save(messageEntity);
-                return  true;
-            }catch (DataAccessException e){
-                return false;
-            }
+    public ResponseObject<MessageResponse> saveMessage(MessageRequest messageRequest){
+        MessageEntity messageEntity = this.messageMapper.map(messageRequest);
+        if(messageEntity == null)
+            return new ResponseObject<MessageResponse>(Status.NOT_FOUND, "Contact or user not on system", null);
+        try{
+            this.msgRepository.saveAndFlush(messageEntity);
+            MessageResponse messageResponse = this.messageMapper.map(messageEntity);
+            return  new ResponseObject<MessageResponse>(Status.SUCCESS, "Message sent", messageResponse);
+        }catch (DataAccessException e){
+            return new ResponseObject<MessageResponse>(Status.UNSUCCESSFUL, "Message not sent", null);
+        }
     }
 
     public List<MessageEntity> getMessagesBetweenUsers(Long user1Id, Long user2Id){
