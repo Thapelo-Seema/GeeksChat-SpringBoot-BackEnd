@@ -1,4 +1,4 @@
-package com.geeks4L.chat_server.controllers.authentication;
+package com.geeks4L.chat_server.controllers;
 
 import com.geeks4L.chat_server.interfaces.IAuthService;
 import com.geeks4L.chat_server.models.generics.ResponseObject;

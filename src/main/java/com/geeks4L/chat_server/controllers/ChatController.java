@@ -1,4 +1,4 @@
-package com.geeks4L.chat_server.controllers.messaging;
+package com.geeks4L.chat_server.controllers;
 
 import com.geeks4L.chat_server.models.enums.Status;
 import com.geeks4L.chat_server.models.generics.ResponseObject;

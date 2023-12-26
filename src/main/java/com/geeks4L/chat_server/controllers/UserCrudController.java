@@ -1,4 +1,4 @@
-package com.geeks4L.chat_server.controllers.user_crud;
+package com.geeks4L.chat_server.controllers;
 
 import com.geeks4L.chat_server.interfaces.IUserCrudService;
 import com.geeks4L.chat_server.models.generics.ResponseObject;
